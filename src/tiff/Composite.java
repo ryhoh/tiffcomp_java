@@ -2,10 +2,12 @@
 // Released under the MIT license
 // https://opensource.org/licenses/mit-license.php
 
-package tiffcomp;
+package tiff;
 
 import java.io.EOFException;
 import java.io.IOException;
+
+import progressBar.ProgressBar;
 
 // 比較明合成処理のピクセル比較部分の手続きを実現するインタフェース
 

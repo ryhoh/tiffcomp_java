@@ -1,4 +1,4 @@
-package tiffcomp;
+package progressBar;
 
 public interface ProgressBar {
 	

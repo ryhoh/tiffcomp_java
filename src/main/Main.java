@@ -2,7 +2,7 @@
 // Released under the MIT license
 // https://opensource.org/licenses/mit-license.php
 
-package tiffcomp
+package main
 
 /**
  * @author tetuya
@@ -28,6 +28,10 @@ import java.io.EOFException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import tiff.Composite;
+import tiff.InputFile;
+import tiff.OutputFile;
 
 public class Main implements Composite {
 

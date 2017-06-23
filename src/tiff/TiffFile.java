@@ -6,7 +6,7 @@
  * Tiffファイルには読み込み用と書き込み用があるが、どちらにも共通する機能を
  * 抽象クラスで定義する
  */
-package tiffcomp;
+package tiff;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

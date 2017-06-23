@@ -2,7 +2,7 @@
 // Released under the MIT license
 // https://opensource.org/licenses/mit-license.php
 
-package tiffcomp;
+package tiff;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
