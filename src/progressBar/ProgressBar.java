@@ -28,7 +28,12 @@ public interface ProgressBar {
 				System.out.print("-");
 			}
 			
-			System.out.println(String.format("| %5.1f%%   NUM:[ %d / %d ]", PER, pos, full));
+			System.out.print(String.format("| %5.1f%%   NUM:[ %d / %d ]", PER, pos, full));
+			if(pos == full) {
+				System.out.println("");	// 改行
+			} else {
+				System.out.print("\r");	// プログレスバーの更新に備えてカーソルを頭に戻す
+			}
 		}
 	}
 	
@@ -41,19 +46,24 @@ public interface ProgressBar {
 			System.out.println("invalid progress");
 		} else {
 			final int BAR = pos * 20 / full;	// 0から20までの21段階化
-		
-		// 表示
-		System.out.print("|");
-		
-		for(int i = 0; i < BAR; i++) {
-			System.out.print("*");
-		}
-		
-		for(int i = BAR; i < 20; i++) {
-			System.out.print("-");
-		}
-		
-		System.out.println(String.format("| %5.1f%%", PER));
+			
+			// 表示
+			System.out.print("|");
+			
+			for(int i = 0; i < BAR; i++) {
+				System.out.print("*");
+			}
+			
+			for(int i = BAR; i < 20; i++) {
+				System.out.print("-");
+			}
+			
+			System.out.print(String.format("| %5.1f%%", PER));
+			if(pos == full) {
+				System.out.println("");	// 改行
+			} else {
+				System.out.print("\r");	// プログレスバーの更新に備えてカーソルを頭に戻す
+			}
 		}
 		
 	}

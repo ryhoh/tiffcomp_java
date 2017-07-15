@@ -45,6 +45,21 @@ public class InputFile extends TiffFile {
 				this.stream.seek(cursor += 6);
 				this.imgHeight = nextInt();
 				break;
+			case 0x0102:		// ビットの深さ
+				this.stream.seek(cursor += 6);
+				this.colorBit = nextInt();
+				// データではなく場所が記録されていた場合の処理
+				if(this.colorBit >= 16) {
+					// cursorの位置を退避し、ポインタの先の位置をcursorに入れる
+					long tmp = this.cursor;
+					this.cursor = this.colorBit;
+					this.stream.seek(this.cursor);
+					this.colorBit = nextShort();
+					// 元の位置に戻る
+					this.cursor = tmp;
+					this.stream.seek(this.cursor);
+				}
+				break;
 			case 0x0111:		// 画像データの開始位置
 				this.stream.seek(cursor += 6);
 				this.imgPos = nextInt();

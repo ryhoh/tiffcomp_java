@@ -18,6 +18,8 @@ public abstract class TiffFile {
 	protected RandomAccessFile stream;	/* 入出力用ストリーム */
 	protected long cursor = 0L;	// 読み込み位置を記憶
 								// seekやread, writeをしたらその分進める
+	protected int colorBit = 8;	// 1ピクセルの1色を表す情報量
+		// デフォルトでは1byte = 8bit 2byteにも対応できるように
 	
 	public void close() throws IOException{
 		this.stream.close();
@@ -45,6 +47,10 @@ public abstract class TiffFile {
 	
 	public long getImgPos() {
 		return this.imgPos;
+	}
+	
+	public int getColorBit() {
+		return this.colorBit;
 	}
 	
 	public void setCursor(long cursor) {
