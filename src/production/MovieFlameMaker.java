@@ -23,6 +23,7 @@ public class MovieFlameMaker implements Assets {
 	
 	public MovieFlameMaker(String[] file) {
 		this.fileNames = file;
+		System.out.println(file.length + " pictures loaded.");
 	}
 	
 	public void run() {
@@ -38,6 +39,7 @@ public class MovieFlameMaker implements Assets {
 			OutputFile firstOutput = new OutputFile(FILENAME[0] + fileNumber + FILENAME[1]);
 			Assets.copyAll(firstInput, firstOutput);
 			fileNumber++;
+			System.out.println(1 + "/" + (this.fileNames.length) + " completed.");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -52,6 +54,8 @@ public class MovieFlameMaker implements Assets {
 			composite = new Composite(args, FILENAME[0] + fileNumber + FILENAME[1]);
 			composite.hikakumei();
 			composite.close();
+			
+			System.out.println((fileNumber+1) + "/" + (this.fileNames.length) + " completed.");
 		}
 	}
 }

@@ -62,7 +62,7 @@ public class Composite implements ProgressBar, Assets {
 		}
 
 		//メタデータを渡すために、1つ目の入力ファイルから一旦全てのデータをコピーする
-		System.out.println("now copying all data");
+		//System.out.println("now copying all data");
 		try {
 			Assets.copyAll(this.inputFiles[0], this.outputFile);
 		} catch (EOFException eof) {
@@ -94,7 +94,7 @@ public class Composite implements ProgressBar, Assets {
 	// 比較明合成を実行
 	public void hikakumei() {
 		int colorBit = inputFiles[0].getColorBit();
-		System.out.println(colorBit + "bit");
+		//System.out.println(colorBit + "bit");
 		try {
 			if(colorBit == 8) {
 				dividePixels();
@@ -124,27 +124,6 @@ public class Composite implements ProgressBar, Assets {
 	}
 	
 	/* ---------------------------------------------------------以下は内部処理用の関数--------------------------------------------------------- */
-	/*
-	// 最初のファイルから全てのデータをコピー
-	protected void copyAll() throws IOException {
-		
-		// カーソルの位置を最初に合わせる
-		this.inputFiles[0].setCursor(0L);
-		this.outputFile.setCursor(0L);
-		
-		// ループ制御用に書き込むファイルサイズを確認
-		final long FILESIZE = this.inputFiles[0].getLength();
-		
-		final int SIZE = 65536;			// 1度にコピーする情報量(byte)
-		byte[] buffer = new byte[SIZE];	// コピーするデータを一時的に持つ
-		
-		for(int i = 0; i < FILESIZE / SIZE; i++) {
-			this.inputFiles[0].read(buffer, 0, SIZE);
-			this.outputFile.write(buffer, 0, SIZE);
-		}
-		int loaded = this.inputFiles[0].read(buffer, 0, SIZE);	// 読み込んだ数
-		this.outputFile.write(buffer, 0, loaded);			// だけ書き込む
-	}*/
 	
 	// 全ての入力ファイルの縦横の長さが同一であることを確かめる
 	protected void checkLength() {
