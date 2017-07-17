@@ -2,22 +2,37 @@
 // Released under the MIT license
 // https://opensource.org/licenses/mit-license.php
 
-package tiff;
+/*
+ *	堀哲也 2017/06/19
+ *
+ *	tiffcomp(Java版)
+ *
+ *	TIFF形式の夜景・星景写真比較明合成バッチ処理における合成処理手続き
+ *
+ *	TIFFファイル名が複数与えられ、画像データ以外は全てそのまま、画像データはピクセル毎に比較明合成を行い、出力する
+ *	
+ *	TIFFのファイル構造については以下を参考にしています
+ *	http://symfo.web.fc2.com/blog/tiff_hex.html
+ */
+
+package production;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import progressBar.ProgressBar;
+import tiff.InputFile;
+import tiff.OutputFile;
 
 // 比較明合成処理のピクセル比較部分の手続きを実現するクラス
-
-public class Composite implements ProgressBar {
+public class Composite implements ProgressBar, Assets {
 	
 	InputFile[] inputFiles;
 	OutputFile outputFile = null;
 	
-	public Composite(String[] files) {
+	// 入力ファイル名を列挙した配列と、出力ファイル名として使いたい文字列
+	public Composite(String[] files, String outputName) {
 		
 		// ファイルを用意
 		if(files.length < 2) {
@@ -40,7 +55,7 @@ public class Composite implements ProgressBar {
 		
 		// 出力ファイルを作成
 		try {
-			this.outputFile = new OutputFile("output.tif");
+			this.outputFile = new OutputFile(outputName);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 			System.exit(1);
@@ -49,7 +64,7 @@ public class Composite implements ProgressBar {
 		//メタデータを渡すために、1つ目の入力ファイルから一旦全てのデータをコピーする
 		System.out.println("now copying all data");
 		try {
-			copyAll();
+			Assets.copyAll(this.inputFiles[0], this.outputFile);
 		} catch (EOFException eof) {
 			// EOFに到達するが無視
 		} catch (IOException e1) {
@@ -73,7 +88,7 @@ public class Composite implements ProgressBar {
 		// 全てのファイルの縦横の長さが同一であることを確認
 		checkLength();
 		
-		System.out.println("ready");
+		//System.out.println("ready");
 	}
 	
 	// 比較明合成を実行
@@ -92,7 +107,7 @@ public class Composite implements ProgressBar {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("done");
+		//System.out.println("done");
 	}
 	
 	// ファイルの使用を終了する
@@ -105,11 +120,11 @@ public class Composite implements ProgressBar {
 				System.exit(1);
 			}
 		}
-		System.out.println("closed");
+		//System.out.println("closed");
 	}
 	
 	/* ---------------------------------------------------------以下は内部処理用の関数--------------------------------------------------------- */
-	
+	/*
 	// 最初のファイルから全てのデータをコピー
 	protected void copyAll() throws IOException {
 		
@@ -118,9 +133,9 @@ public class Composite implements ProgressBar {
 		this.outputFile.setCursor(0L);
 		
 		// ループ制御用に書き込むファイルサイズを確認
-		final long FILESIZE = this.inputFiles[0].stream.length();
+		final long FILESIZE = this.inputFiles[0].getLength();
 		
-		final int SIZE = 65536;
+		final int SIZE = 65536;			// 1度にコピーする情報量(byte)
 		byte[] buffer = new byte[SIZE];	// コピーするデータを一時的に持つ
 		
 		for(int i = 0; i < FILESIZE / SIZE; i++) {
@@ -129,7 +144,7 @@ public class Composite implements ProgressBar {
 		}
 		int loaded = this.inputFiles[0].read(buffer, 0, SIZE);	// 読み込んだ数
 		this.outputFile.write(buffer, 0, loaded);			// だけ書き込む
-	}
+	}*/
 	
 	// 全ての入力ファイルの縦横の長さが同一であることを確かめる
 	protected void checkLength() {

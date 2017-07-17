@@ -60,4 +60,8 @@ public abstract class TiffFile {
 	public long getCursor() {
 		return this.cursor;
 	}
+	
+	public long getLength() throws IOException {
+		return this.stream.length();
+	}
 }

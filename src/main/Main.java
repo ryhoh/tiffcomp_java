@@ -11,22 +11,8 @@ package main
 
 
 
-/*
- *	堀哲也 2017/06/19
- *
- *	tiffcomp.c
- *
- *	TIFF形式の夜景・星景写真比較明合成バッチ処理における合成処理手続き
- *
- *	TIFFファイルが2つ与えられ、画像データ以外は全てそのまま、画像データはピクセル毎に比較明合成を行い、出力する
- *	入力ファイル1をベースとし、入力ファイル2により明るいピクセルがあれば、その部分をファイル2の内容で置き換える
- *	データのコピーは1つ目のファイルから全てコピー
- *
- *	TIFFのファイル構造については以下を参照
- *	http://symfo.web.fc2.com/blog/tiff_hex.html
- */
-
-import tiff.Composite;
+import production.Composite;
+import production.MovieFlameMaker;
 
 public class Main {
 	
@@ -37,9 +23,14 @@ public class Main {
 			System.exit(1);
 		}
 		
-		Composite composite = new Composite(args);
+		Composite composite = new Composite(args, "output.tif");
 		composite.hikakumei();
 		composite.close();
+		
+		MovieFlameMaker maker = new MovieFlameMaker(args);
+		maker.run();
+		
+		System.out.println("Done.");
 	}
 
 }
