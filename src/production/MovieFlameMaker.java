@@ -11,7 +11,7 @@ import tiff.OutputFile;
 
 // Compositeクラスを利用して、だんだん光跡が伸びていくような動画を作ることに応用する
 // 動画ファイルを直接吐くのは難しいので、まずは動画に使うフレーム（画像）の束を作る
-public class MovieFlameMaker implements Assets {
+public class MovieFlameMaker {
 	
 	protected Composite composite;	// これを使い回しながらフレームを作る
 	protected String[] fileNames;
@@ -37,7 +37,7 @@ public class MovieFlameMaker implements Assets {
 		try {
 			InputFile firstInput = new InputFile(fileNames[0]);
 			OutputFile firstOutput = new OutputFile(FILENAME[0] + fileNumber + FILENAME[1]);
-			Assets.copyAll(firstInput, firstOutput);
+			firstInput.copyAll_to(firstOutput);
 			fileNumber++;
 			System.out.println(1 + "/" + (this.fileNames.length) + " completed.");
 		} catch (IOException e) {

@@ -134,13 +134,26 @@ public class InputFile extends TiffFile {
 		this.cursor += 8;
 		return this.stream.readLong();
 	}*/
+
+	// あるOutputFileへ全てのデータをコピー
+	public void copyAll_to(OutputFile outputFile) throws IOException {
+
+		// カーソルの位置を最初に合わせる
+		setCursor(0L);
+		outputFile.setCursor(0L);
+
+		// ループ制御用に書き込むファイルサイズを確認
+		final long FILESIZE = getLength();
+
+		final int SIZE = 65536;			// 1度にコピーする情報量(byte)
+		byte[] buffer = new byte[SIZE];	// コピーするデータを一時的に持つ
+
+		for(int i = 0; i < FILESIZE / SIZE; i++) {
+			read(buffer, 0, SIZE);
+			outputFile.write(buffer, 0, SIZE);
+		}
+		int loaded = read(buffer, 0, SIZE);	// 読み込んだ数
+		outputFile.write(buffer, 0, loaded);			// だけ書き込む
+	}
 	
 }
-
-/*public InputFile(String fileName) throws IOException{
-//byte buff[];
-
-this.stream = new DataInputthis.stream(new BufferedInputthis.stream(new FileInputthis.stream(fileName)));
-
-fileSize = this.stream.available();	// これいる？
-}*/

@@ -26,10 +26,11 @@ import tiff.InputFile;
 import tiff.OutputFile;
 
 // 比較明合成処理のピクセル比較部分の手続きを実現するクラス
-public class Composite implements ProgressBar, Assets {
+public class Composite {
 	
 	InputFile[] inputFiles;
 	OutputFile outputFile = null;
+    ProgressBar pb;
 	
 	// 入力ファイル名を列挙した配列と、出力ファイル名として使いたい文字列
 	public Composite(String[] files, String outputName) {
@@ -64,7 +65,7 @@ public class Composite implements ProgressBar, Assets {
 		//メタデータを渡すために、1つ目の入力ファイルから一旦全てのデータをコピーする
 		//System.out.println("now copying all data");
 		try {
-			Assets.copyAll(this.inputFiles[0], this.outputFile);
+            this.inputFiles[0].copyAll_to(this.outputFile);
 		} catch (EOFException eof) {
 			// EOFに到達するが無視
 		} catch (IOException e1) {
@@ -152,7 +153,8 @@ public class Composite implements ProgressBar, Assets {
 		final int NUMOFPHAZE = IMGSIZE / JOB_PIXEL;			// 処理の回数
 		
 		// 作業開始前に1度プログレスバーを見せる
-		ProgressBar.printProgress(0, NUMOFPHAZE);
+        pb = new ProgressBar(NUMOFPHAZE);
+        pb.print();
 		
 		// 全てのファイルのカーソルを画像データ開始位置へ
 		for(InputFile inputFile : this.inputFiles) {
@@ -176,8 +178,9 @@ public class Composite implements ProgressBar, Assets {
 			this.outputFile.write(array);
 			
 			// 途中経過を示す
+            pb.click();
 			if(i % 10 == 0) {
-				ProgressBar.printProgress(i, NUMOFPHAZE);
+				pb.print();
 			}
 		}
 		/*---------- 残った端切れ部分の処理 ----------*/
@@ -199,7 +202,7 @@ public class Composite implements ProgressBar, Assets {
 		/* ---------------------------------------- */
 		
 		// 実行完了を示す
-		ProgressBar.printProgress(NUMOFPHAZE, NUMOFPHAZE);
+		System.out.println("100% complete");
 		
 	}
 	
@@ -251,7 +254,7 @@ public class Composite implements ProgressBar, Assets {
 		final int NUMOFPHAZE = IMGSIZE / JOB_PIXEL;			// 処理の回数
 		
 		// 作業開始前に1度プログレスバーを見せる
-		ProgressBar.printProgress(0, NUMOFPHAZE);
+		pb = new ProgressBar(NUMOFPHAZE);
 		
 		// 全てのファイルのカーソルを画像データ開始位置へ
 		for(InputFile inputFile : this.inputFiles) {
@@ -275,8 +278,9 @@ public class Composite implements ProgressBar, Assets {
 			this.outputFile.write(array);
 			
 			// 途中経過を示す
+            pb.click();
 			if(i % 10 == 0) {
-				ProgressBar.printProgress(i, NUMOFPHAZE);
+				pb.print();
 			}
 		}
 		/*---------- 残った端切れ部分の処理 ----------*/
@@ -297,7 +301,7 @@ public class Composite implements ProgressBar, Assets {
 		/* ---------------------------------------- */
 		
 		// 実行完了を示す
-		ProgressBar.printProgress(NUMOFPHAZE, NUMOFPHAZE);
+        System.out.println("100% complete");
 		
 	}
 	
