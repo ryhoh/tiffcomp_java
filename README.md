@@ -8,7 +8,7 @@ JPEG画像でこれを行うアプリケーションは既にあるが，非圧�
 後に，その応用として，合成される様子をタイムラプス映像風にする機能も加えた．  
 （映像用の画像フレームを作るだけ．映像として完成させるにはAdobe Premiere等を使用）  
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gG56KpCU9f4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<video width=720px controls><source src="md_resources/mov.mp4"></video>  
 
 ## どのように使う？
 ```
